@@ -77,6 +77,41 @@ Do not remove these unless you want to re-debug Chromium inside Docker:
 - Google Chrome from Google's Linux APT repo
 - `antigravity` from Google's Artifact Registry APT repo
 
+## Keep Antigravity Up to Date
+
+### 1. Manual update
+
+Preferred approach: rebuild the image without Docker layer cache so the latest `antigravity` package is installed into the image itself.
+
+```bash
+docker compose build --no-cache antigravity
+docker compose up -d --force-recreate antigravity
+```
+
+Verify the installed version:
+
+```bash
+docker compose exec antigravity bash -lc 'apt-cache policy antigravity | sed -n "1,20p"'
+docker compose exec antigravity bash -lc 'dpkg -s antigravity | sed -n "1,20p"'
+```
+
+If you also want the newest Chrome package from Google's repo, use the same no-cache rebuild flow.
+
+### 2. Let Antigravity's agent do it for you
+
+Open this repo in Antigravity and ask the agent to perform the same persistent update flow. This repo includes `AGENTS.md` with repo-specific guidance, so the agent should follow it.
+
+Example prompt:
+
+```text
+Update the Antigravity Docker image in this repo to the latest available package version.
+Use the persistent image-based approach, not a one-off in-container apt upgrade.
+Rebuild with no cache, recreate the container, then verify the installed version with
+`apt-cache policy antigravity` and `dpkg -s antigravity`. Show me the final version.
+```
+
+The important part is to avoid a temporary update only inside the running container. A one-off `apt-get install antigravity` inside the live container will be lost the next time the container is rebuilt or recreated.
+
 ## Verify It Is Official Google Antigravity
 
 Check the configured package source:
