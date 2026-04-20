@@ -1,0 +1,17 @@
+services:
+  antigravity:
+    build: .
+    ports:
+      - "6080:6080"       # noVNC browser UI
+    volumes:
+      - ${WORKSPACE_DIR:-.}:/workspace:rw
+    environment:
+      VNC_PASSWORD: ${VNC_PASSWORD:-changeme}
+    security_opt:
+      - no-new-privileges:true
+      - seccomp:unconfined
+    # No network access beyond what Antigravity needs
+    # Remove the line below if agent needs internet
+    # network_mode: none
+    shm_size: 2gb          # Give Chrome auth popups enough shared memory headroom
+    restart: unless-stopped
