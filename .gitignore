@@ -1,0 +1,20 @@
+# Local tool/editor metadata
+.codex
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*~
+
+# Local env overrides
+.env
+.env.*
+!.env.example
+
+# Local debug artifacts
+*.log
+chrome-launch.log
+accounts-*.png
+oauth-*.png
+popup-*.png
+wrapper-test.png
