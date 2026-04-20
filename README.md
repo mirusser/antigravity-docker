@@ -77,6 +77,28 @@ Do not remove these unless you want to re-debug Chromium inside Docker:
 - Google Chrome from Google's Linux APT repo
 - `antigravity` from Google's Artifact Registry APT repo
 
+## Benefits and Drawbacks
+
+### Benefits
+
+- Works on hosts where a native Antigravity setup is inconvenient, including Arch.
+- Reproducible environment: same base image, same package sources, same startup flow.
+- Easy to reset or update by rebuilding the image.
+- Browser-based access through noVNC, with no separate host desktop integration required.
+- Keeps most app dependencies inside the container instead of on the host.
+- Uses the official Google Antigravity Linux package feed.
+- Keeps the mounted workspace separate from the app/runtime environment.
+
+### Drawbacks
+
+- Less native and usually slower than running directly on the host.
+- More moving parts: Docker, VNC, noVNC, Chrome, DBus, and container security settings.
+- Google sign-in is more fragile in containers than on a normal desktop.
+- Hardware acceleration is limited, so GUI responsiveness can be worse.
+- Image size and rebuild time are larger than a simple CLI-style container.
+- Host integration is weaker for things like clipboard behavior, file dialogs, and notifications.
+- This setup relies on `seccomp:unconfined`, so it is less locked down than a default Docker profile.
+
 ## Keep Antigravity Up to Date
 
 ### 1. Manual update
