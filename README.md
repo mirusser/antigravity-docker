@@ -24,13 +24,6 @@ sudo systemctl enable --now docker.service
 
 From this directory:
 
-```bash
-export VNC_PASSWORD='replace-this'
-# optional:
-# export WORKSPACE_DIR=/absolute/path/to/another/repo
-
-docker compose up -d --build
-```
 
 ```bash
 export VNC_PASSWORD='replace-this'
