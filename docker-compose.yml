@@ -5,10 +5,14 @@ services:
       - "6080:6080"       # noVNC browser UI
     volumes:
       - ${WORKSPACE_DIR:-.}:/workspace:rw
+      - /var/run/docker.sock:/var/run/docker.sock # mount docker
     environment:
       VNC_PASSWORD: ${VNC_PASSWORD:-changeme}
+      DOCKER_HOST: unix:///var/run/docker.sock
+    group_add:
+      - "${DOCKER_GID}"
     security_opt:
-      - no-new-privileges:true
+      # - no-new-privileges:true -- seems that agent needs it, remove later TODO
       - seccomp:unconfined
     # No network access beyond what Antigravity needs
     # Remove the line below if agent needs internet

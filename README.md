@@ -32,6 +32,18 @@ export VNC_PASSWORD='replace-this'
 docker compose up -d --build
 ```
 
+```bash
+export VNC_PASSWORD='replace-this'
+export DOCKER_GID="$(stat -c '%g' /var/run/docker.sock)"
+
+# optional:
+# export WORKSPACE_DIR=/absolute/path/to/another/repo
+
+docker compose up -d --build
+# or if you need to recreate it:
+docker compose up -d --build --force-recreate
+```
+
 Open:
 
 ```text
